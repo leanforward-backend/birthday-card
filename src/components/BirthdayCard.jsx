@@ -10,6 +10,8 @@ export default function BirthdayCard() {
 
   // Start closed (0) and open as you scroll (-180)
   const rotateY = useTransform(scrollYProgress, [0, 0.8], [0, -180]);
+  // Move the card to the right as it opens to keep it centered
+  const translateX = useTransform(scrollYProgress, [0, 0.8], [0, 225]);
   const [showTyping, setShowTyping] = useState(false);
 
   // Start typing animation when card is opened
@@ -29,7 +31,10 @@ export default function BirthdayCard() {
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
         <div className="w-full max-w-5xl h-[600px] perspective-[2000px]">
           {/* Card Container */}
-          <div className="relative w-full h-full preserve-3d">
+          <motion.div
+            style={{ x: translateX }}
+            className="relative w-full h-full preserve-3d"
+          >
             {/* Left Page (Base) - Always visible */}
             <div className="absolute left-1/4 w-1/2 h-full bg-[#fdfbf7] shadow-2xl p-8 flex flex-col z-10">
               <div className="flex-1 flex flex-col justify-between">
@@ -87,7 +92,7 @@ export default function BirthdayCard() {
                 </div>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

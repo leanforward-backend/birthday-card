@@ -37,7 +37,7 @@ export default function Gallery() {
   });
 
   return (
-    <section className="min-h-screen bg-black text-white p-8 flex flex-col items-center">
+    <section className="min-h-screen text-white p-8 flex flex-col items-center">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}

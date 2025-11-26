@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from "convex/react";
 import { motion } from "framer-motion";
+import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { api } from "../../convex/_generated/api";
 
@@ -7,6 +8,8 @@ export default function Goals() {
   const [text, setText] = useState("");
   const addGoal = useMutation(api.goals.add);
   const goals = useQuery(api.goals.list) || [];
+
+  const deleteGoal = useMutation(api.goals.deleteGoal);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,6 +30,12 @@ export default function Goals() {
         <h2 className="text-4xl font-bold mb-8 text-center text-yellow-400">
           Future Goals
         </h2>
+
+        <p className="text-center text-gray-500 mb-8">
+          Seeing as you're only 60 and humans can live to 120, you're only
+          halfway there! Here's a good opertunity to set some goals for the next
+          half!
+        </p>
 
         <form onSubmit={handleSubmit} className="mb-12">
           <div className="flex flex-col gap-4">
@@ -54,9 +63,19 @@ export default function Goals() {
               className="p-4 bg-gray-800 rounded-lg border border-gray-700"
             >
               <p className="text-lg">{goal.text}</p>
-              <span className="text-sm text-gray-500">
-                {new Date(goal.createdAt).toLocaleDateString()}
-              </span>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-500">
+                  {new Date(goal.createdAt).toLocaleDateString()}
+                </span>
+                <button
+                  onClick={() => {
+                    deleteGoal({ id: goal._id });
+                  }}
+                  className="text-gray-500 hover:text-gray-300"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
             </motion.div>
           ))}
           {goals.length === 0 && (

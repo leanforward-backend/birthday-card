@@ -17,3 +17,10 @@ export const list = query({
     return await ctx.db.query("goals").order("desc").collect();
   },
 });
+
+export const deleteGoal = mutation({
+  args: { id: v.id("goals") },
+  handler: async (ctx, args) => {
+    await ctx.db.delete(args.id);
+  },
+});
